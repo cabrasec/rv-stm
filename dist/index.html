@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sport Play | Revenda</title>
+  <meta name="description"
+    content="Revenda Sport Play: tenha seu próprio serviço de streaming com painel profissional e gestão de acessos. Fale no WhatsApp." />
+  <meta name="theme-color" content="#0E0B0A" />
+
+  <style>
+    :root {
+      --bg1: #0E0B0A;
+      /* obsidiana */
+      --bg2: #24110B;
+      /* vinho terroso */
+      --card: #141010;
+      /* preto quente */
+      --text: #EAEAEA;
+      --muted: #B9B0AA;
+      --gold: #CFA44A;
+      /* dourado antigo */
+      --jade: #1F7A5C;
+      /* jade */
+      --jade2: #28A97A;
+      --shadow: rgba(0, 0, 0, .58);
+      --radius: 20px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", "Noto Sans", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1100px 600px at 50% 20%, rgba(207, 164, 74, .18), transparent 60%),
+        radial-gradient(900px 500px at 15% 80%, rgba(31, 122, 92, .16), transparent 55%),
+        linear-gradient(160deg, var(--bg2), var(--bg1) 58%, #070606);
+      padding: 22px 16px 34px;
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: .16;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(207, 164, 74, .16) 0 2px, transparent 3px),
+        radial-gradient(circle at 70% 20%, rgba(207, 164, 74, .10) 0 2px, transparent 3px),
+        radial-gradient(circle at 55% 65%, rgba(207, 164, 74, .10) 0 2px, transparent 3px),
+        radial-gradient(circle at 30% 80%, rgba(207, 164, 74, .12) 0 2px, transparent 3px);
+      background-size: 240px 240px;
+      mix-blend-mode: screen;
+    }
+
+    .wrap {
+      max-width: 1020px;
+      margin: 0 auto;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin: 6px 2px 18px;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.05;
+    }
+
+    .brand .name {
+      font-weight: 900;
+      letter-spacing: .5px;
+      color: var(--gold);
+      font-size: 22px;
+      text-transform: uppercase;
+    }
+
+    .brand .tag {
+      color: rgba(234, 234, 234, .78);
+      font-size: 12.5px;
+      margin-top: 4px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, .08);
+      background: rgba(20, 16, 16, .55);
+      box-shadow: 0 14px 40px var(--shadow);
+      font-size: 12.5px;
+      color: rgba(234, 234, 234, .88);
+      white-space: nowrap;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--jade2);
+      box-shadow: 0 0 16px rgba(40, 169, 122, .55);
+    }
+
+    /* ✅ GRID ESTÁVEL */
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .panel {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .03), transparent 35%),
+        rgba(20, 16, 16, .92);
+      border: 1px solid rgba(255, 255, 255, .08);
+      border-radius: var(--radius);
+      box-shadow: 0 18px 60px var(--shadow);
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background: radial-gradient(520px 220px at 30% -20%, rgba(207, 164, 74, .20), transparent 60%);
+      pointer-events: none;
+    }
+
+    .headline {
+      position: relative;
+      margin: 4px 0 8px;
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: .2px;
+      text-transform: uppercase;
+    }
+
+    .headline .accent {
+      color: var(--gold);
+      text-shadow: 0 0 18px rgba(207, 164, 74, .18);
+    }
+
+    .sub {
+      position: relative;
+      margin: 0 0 16px;
+      color: rgba(234, 234, 234, .85);
+      line-height: 1.45;
+      font-size: 14.5px;
+      max-width: 62ch;
+    }
+
+    .bullets {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 14px;
+      margin: 12px 0 14px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .bullets li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13.8px;
+      color: rgba(234, 234, 234, .92);
+      line-height: 1.35;
+    }
+
+    .check {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 20px;
+      color: var(--gold);
+      filter: drop-shadow(0 0 10px rgba(207, 164, 74, .12));
+      margin-top: 1px;
+    }
+
+    .plans {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .plan {
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, .08);
+      background: rgba(0, 0, 0, .18);
+      padding: 14px 14px 12px;
+      text-align: left;
+      cursor: pointer;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      user-select: none;
+    }
+
+    .plan:hover {
+      transform: translateY(-1px);
+      border-color: rgba(207, 164, 74, .28);
+    }
+
+    .plan.active {
+      border-color: rgba(207, 164, 74, .55);
+      background: rgba(207, 164, 74, .08);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, .35);
+    }
+
+    .plan .t {
+      font-weight: 900;
+      letter-spacing: .2px;
+    }
+
+    .plan .p {
+      margin-top: 6px;
+      color: rgba(234, 234, 234, .88);
+      font-size: 13.2px;
+      line-height: 1.25;
+    }
+
+    .priceTag {
+      margin-top: 10px;
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--gold);
+    }
+
+    .visual {
+      display: block;
+    }
+
+    .visualInner {
+      width: 100%;
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, .08);
+      background:
+        radial-gradient(520px 280px at 60% 20%, rgba(207, 164, 74, .20), transparent 65%),
+        radial-gradient(380px 220px at 40% 85%, rgba(31, 122, 92, .18), transparent 60%),
+        linear-gradient(180deg, rgba(255, 255, 255, .03), transparent 30%),
+        rgba(20, 16, 16, .92);
+      box-shadow: 0 18px 60px var(--shadow);
+      overflow: hidden;
+      position: relative;
+
+      /* 🔥 deixa mais “alta” e imponente */
+      aspect-ratio: 3 / 4;
+      min-height: 620px;
+    }
+
+    .heroImg {
+      position: absolute;
+      inset: 0;
+      background-image: url("hero-revenda-azteca.png");
+      background-size: cover;
+      background-position: 70% center;
+      /* foca mais no modelo */
+      transform: scale(1.08);
+      /* zoom leve */
+      opacity: .95;
+      filter: contrast(1.06) saturate(1.08);
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(14, 11, 10, .92) 0%, rgba(14, 11, 10, .65) 45%, rgba(14, 11, 10, .35) 100%),
+        radial-gradient(800px 400px at 70% 15%, rgba(207, 164, 74, .18), transparent 60%);
+    }
+
+    .visualContent {
+      position: relative;
+      padding: 18px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: max-content;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(0, 0, 0, .25);
+      font-size: 12px;
+      color: rgba(234, 234, 234, .92);
+    }
+
+    .badge b {
+      color: var(--gold);
+    }
+
+    /* CALCULADORA */
+    .calc {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, .08);
+      background: rgba(0, 0, 0, .18);
+      position: relative;
+    }
+
+    .calc h3 {
+      margin: 0 0 10px;
+      font-size: 14px;
+      letter-spacing: .2px;
+      text-transform: uppercase;
+      color: rgba(234, 234, 234, .92);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    label {
+      display: block;
+      font-size: 12.5px;
+      color: rgba(234, 234, 234, .80);
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: rgba(20, 16, 16, .75);
+      color: var(--text);
+      outline: none;
+    }
+
+    input:focus {
+      border-color: rgba(207, 164, 74, .45);
+      box-shadow: 0 0 0 3px rgba(207, 164, 74, .12);
+    }
+
+    .results {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    .kpi {
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, .08);
+      background: rgba(0, 0, 0, .16);
+      padding: 12px;
+      text-align: left;
+    }
+
+    .kpi .k {
+      font-size: 11.5px;
+      color: rgba(234, 234, 234, .75);
+    }
+
+    .kpi .v {
+      margin-top: 6px;
+      font-size: 18px;
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .kpi .v.gold {
+      color: var(--gold);
+    }
+
+    .kpi .v.jade {
+      color: var(--jade2);
+    }
+
+    .ctaRow {
+      margin-top: 12px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      flex: 1 1 220px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 13px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, .10);
+      background: linear-gradient(180deg, rgba(255, 255, 255, .08), transparent 45%), var(--jade);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 900;
+      letter-spacing: .2px;
+      cursor: pointer;
+      transition: transform .12s ease, background .12s ease, filter .12s ease;
+    }
+
+    .btn:hover {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .10), transparent 45%), var(--jade2);
+      transform: translateY(-1px);
+    }
+
+    .btn.secondary {
+      background: rgba(0, 0, 0, .22);
+    }
+
+    .btn.secondary:hover {
+      background: rgba(207, 164, 74, .10);
+      border-color: rgba(207, 164, 74, .30);
+      transform: translateY(-1px);
+    }
+
+    .fine {
+      margin-top: 10px;
+      font-size: 11.5px;
+      color: rgba(234, 234, 234, .62);
+      line-height: 1.35;
+    }
+
+    @media (max-width: 980px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+
+      .visualInner {
+        height: 320px;
+      }
+
+      .heroImg {
+        background-position: 70% 25%;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .visualInner {
+        height: 260px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="noise" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="name">NetPlay Streaming</div>
+        <div class="tag">Revenda • Plataforma profissional • Gestão de acessos</div>
+      </div>
+      <div class="pill"><span class="dot"></span> Atendimento via WhatsApp</div>
+    </header>
+
+    <section class="hero">
+      <!-- LEFT -->
+      <div class="panel">
+        <div class="headline">
+          TENHA SEU PRÓPRIO <span class="accent">SERVIÇO DE STREAMING PROFISSIONAL</span>
+        </div>
+
+        <p class="sub">
+          Plataforma digital com sistema profissional de gerenciamento de acessos.
+          Ideal para quem quer revender com organização e ganhos recorrentes.
+        </p>
+
+        <ul class="bullets">
+          <li>
+            <svg class="check" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            Painel de gerenciamento
+          </li>
+          <li>
+            <svg class="check" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            Administração de usuários
+          </li>
+          <li>
+            <svg class="check" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            Plataforma 100% digital
+          </li>
+          <li>
+            <svg class="check" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            Uso flexível e suporte
+          </li>
+        </ul>
+
+        <!-- ✅ PLANOS CORRETOS -->
+        <div class="plans" role="tablist" aria-label="Planos de revenda">
+          <div class="plan active" role="tab" tabindex="0" data-plan="Plano 10 Logins" data-planfee="35"
+            data-included="10" data-extra="3.5">
+            <div class="t">Plano 10 Logins</div>
+            <div class="p">Ideal para começar • Inclui 10 acessos</div>
+            <div class="priceTag">R$ 35/mês</div>
+          </div>
+
+          <div class="plan" role="tab" tabindex="0" data-plan="Plano 300 Logins" data-planfee="120" data-included="300"
+            data-extra="0">
+            <div class="t">Plano 300 Logins</div>
+            <div class="p">Plano para escala • Até 300 acessos</div>
+            <div class="priceTag">R$ 120/mês</div>
+          </div>
+        </div>
+
+        <!-- CALCULADORA -->
+        <div class="calc" aria-label="Calculadora de lucro mensal">
+          <h3>Calculadora de lucro mensal</h3>
+
+          <div class="grid">
+            <div>
+              <label for="clients">Quantidade de clientes</label>
+              <input id="clients" type="number" min="0" step="1" value="20" />
+            </div>
+            <div>
+              <label for="sell">Preço de venda por cliente (R$)</label>
+              <input id="sell" type="number" min="0" step="0.50" value="35.00" />
+            </div>
+            <div>
+              <label for="cost">Custo por cliente (R$) <span style="color:rgba(234,234,234,.55)">(se
+                  souber)</span></label>
+              <input id="cost" type="number" min="0" step="0.50" value="0" />
+            </div>
+            <div>
+              <label for="extraCost">Custo por acesso extra (R$) <span style="color:rgba(234,234,234,.55)">(Plano 10
+                  Logins)</span></label>
+              <input id="extraCost" type="number" min="0" step="0.10" value="3.50" />
+            </div>
+          </div>
+
+          <div class="results">
+            <div class="kpi">
+              <div class="k">Receita estimada</div>
+              <div class="v gold" id="rev">R$ 0,00</div>
+            </div>
+            <div class="kpi">
+              <div class="k">Custo estimado</div>
+              <div class="v" id="cst">R$ 0,00</div>
+            </div>
+            <div class="kpi">
+              <div class="k">Lucro estimado</div>
+              <div class="v jade" id="profit">R$ 0,00</div>
+            </div>
+          </div>
+
+          <div class="ctaRow">
+            <a class="btn" id="cta" href="#" rel="noopener">Quero ser revendedor</a>
+            <button class="btn secondary" id="copy" type="button">Copiar resumo</button>
+          </div>
+
+          <div class="fine">
+            O cálculo é uma simulação. Ajuste “custo por cliente” e “custo por acesso extra” conforme sua realidade.
+            No Plano 10 Logins, acima de 10 clientes, o excesso entra como “acesso extra”.
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="visual">
+        <div class="visualInner" aria-label="Banner de revenda">
+          <div class="heroImg" aria-hidden="true"></div>
+          <div class="overlay" aria-hidden="true"></div>
+
+          <div class="visualContent">
+            <div class="badge">🗿 <b>NetPlay</b> • Revenda Streaming</div>
+            <div class="badge">📌 Gestão de acessos • 💬 Suporte WhatsApp</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    (function () {
+      const phone = "5511973737822";
+
+      const plans = Array.from(document.querySelectorAll(".plan"));
+      const clientsEl = document.getElementById("clients");
+      const sellEl = document.getElementById("sell");
+      const costEl = document.getElementById("cost");
+      const extraCostEl = document.getElementById("extraCost");
+
+      const revEl = document.getElementById("rev");
+      const cstEl = document.getElementById("cst");
+      const profitEl = document.getElementById("profit");
+      const cta = document.getElementById("cta");
+      const copyBtn = document.getElementById("copy");
+
+      let activePlan = document.querySelector(".plan.active");
+
+      function moneyBR(v) {
+        const n = Number.isFinite(v) ? v : 0;
+        return n.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+      }
+
+      function setActivePlan(el) {
+        plans.forEach(p => p.classList.remove("active"));
+        el.classList.add("active");
+        activePlan = el;
+
+        const extra = parseFloat(el.dataset.extra || "0");
+        extraCostEl.value = String(extra.toFixed(2));
+        recalc();
+      }
+
+      plans.forEach(p => {
+        p.addEventListener("click", () => setActivePlan(p));
+        p.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            setActivePlan(p);
+          }
+        });
+      });
+
+      function recalc() {
+        const planName = activePlan.dataset.plan;
+        const planFee = parseFloat(activePlan.dataset.planfee || "0");
+        const included = parseInt(activePlan.dataset.included || "0", 10);
+
+        const clients = Math.max(0, parseInt(clientsEl.value || "0", 10));
+        const sell = Math.max(0, parseFloat(sellEl.value || "0"));
+        const cost = Math.max(0, parseFloat(costEl.value || "0"));
+        const extraCost = Math.max(0, parseFloat(extraCostEl.value || "0"));
+
+        const revenue = clients * sell;
+
+        const excess = Math.max(0, clients - included);
+        const excessCost = excess * extraCost;
+
+        const totalCost = planFee + (clients * cost) + excessCost;
+        const profit = revenue - totalCost;
+
+        revEl.textContent = moneyBR(revenue);
+        cstEl.textContent = moneyBR(totalCost);
+        profitEl.textContent = moneyBR(profit);
+
+        const summary =
+          "Olá! Quero informações sobre revenda Sport Play, e os planos disponíveis.%0A%0A" +
+          "Plano selecionado: " + planName + "%0A" +
+          "Clientes (simulação): " + clients + "%0A" +
+          "Venda por cliente: R$ " + sell.toFixed(2).replace(".", ",") + "%0A" +
+          "Mensalidade do plano: R$ " + planFee.toFixed(2).replace(".", ",") + "%0A" +
+          "Excedente de acessos (se houver): " + excess + "%0A" +
+          "Lucro estimado: " + encodeURIComponent(moneyBR(profit));
+
+        const waUrl = "https://wa.me/" + phone + "?text=" + summary;
+        cta.href = waUrl;
+
+        const copyText =
+          "Olá! Quero informações sobre revenda Sport Play, e os planos disponíveis.\n\n" +
+          "Plano selecionado: " + planName + "\n" +
+          "Clientes (simulação): " + clients + "\n" +
+          "Venda por cliente: R$ " + sell.toFixed(2).replace(".", ",") + "\n" +
+          "Mensalidade do plano: R$ " + planFee.toFixed(2).replace(".", ",") + "\n" +
+          "Excedente de acessos (se houver): " + excess + "\n" +
+          "Lucro estimado: " + moneyBR(profit);
+
+        copyBtn.dataset.text = copyText;
+      }
+
+      [clientsEl, sellEl, costEl, extraCostEl].forEach(el => {
+        el.addEventListener("input", recalc);
+      });
+
+      copyBtn.addEventListener("click", async () => {
+        try {
+          await navigator.clipboard.writeText(copyBtn.dataset.text || "");
+          const old = copyBtn.textContent;
+          copyBtn.textContent = "Copiado ✅";
+          setTimeout(() => copyBtn.textContent = old, 1200);
+        } catch {
+          alert("Não consegui copiar automaticamente. Copie manualmente.");
+        }
+      });
+
+      recalc();
+    })();
+  </script>
+</body>
+
+</html>
